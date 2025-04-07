@@ -76,38 +76,70 @@ def preprocess_image(image_path):
 
 
 # Function to generate the skeleton image
-def generate_pose_image(input_image_path, output_image_path):
+# def generate_pose_image(input_image_path, output_image_path):
 
-    # Preprocess the input image
+#     # Preprocess the input image
+#     pose_image = preprocess_image(input_image_path)
+
+#     # Save the skeleton image for debugging
+#     pose_image.save(output_image_path)
+#     print(f" Output Pose_Image is saved as {output_image_path}")
+
+#     # Save the skeleton image in Numpy Array
+#     pose_array = np.array(pose_image)  # Convert to numpy array for further processing
+
+#     # Print basic information
+#     print(f"Array shape: {pose_array.shape}")
+#     print(f"Data type: {pose_array.dtype}")
+
+
+from PIL import Image
+
+def generate_pose_image(input_image_path, output_image_path):
+    # Load input image (for display)
+    input_image = Image.open(input_image_path).convert("RGB")
+
+    # Generate the skeleton image from your function
     pose_image = preprocess_image(input_image_path)
 
-    # Save the skeleton image for debugging
-    pose_image.save(output_image_path)
-    print(f" Output Pose_Image is saved as {output_image_path}")
+    # Convert both to NumPy arrays
+    input_array = np.array(input_image)
+    pose_array = np.array(pose_image)
 
-    # Save the skeleton image in Numpy Array
-    pose_array = np.array(pose_image)  # Convert to numpy array for further processing
+    # Resize to same shape if needed
+    if input_array.shape != pose_array.shape:
+        pose_array = cv2.resize(pose_array, (input_array.shape[1], input_array.shape[0]))
 
-    # Print basic information
+    # Combine images side-by-side
+    combined = np.hstack((input_array, pose_array))
+
+    # Save combined image using OpenCV
+    success = cv2.imwrite(output_image_path, cv2.cvtColor(combined, cv2.COLOR_RGB2BGR))
+
+    if success:
+        print(f" Output Pose_Image is saved as {output_image_path}")
+    else:
+        print(f" Failed to save image: {output_image_path}")
+
+    # Print basic info for debugging
     print(f"Array shape: {pose_array.shape}")
     print(f"Data type: {pose_array.dtype}")
 
 
 
 
-
+import glob
 if __name__ == "__main__":
-# Ensure the input and output directories exist
+
     os.makedirs("input_images", exist_ok=True)
     os.makedirs("output_images", exist_ok=True)
 
-    # Looping through the 5 input images
-    for i in range(1, 6):
-        # Construct the input and output paths dynamically
-        input_image_path = f"input_images/{i}.jpg"  # Input image path
-        output_image_path = f"color_ouput_images/skeleton_image_{i}.png"  # Output image path
+    image_paths = sorted(glob.glob("input_images/*.jpg"))
+    print(f"🔍 Found {len(image_paths)} image(s) in 'input_images/'")
 
-        # Call the function for each image
+    for i, input_image_path in enumerate(image_paths):
+        output_image_path = f"output_images/skeleton_image_{i}.png"
+
         try:
             generate_pose_image(input_image_path, output_image_path)
             print(f"Processed image {i}: Saved to {output_image_path}")
