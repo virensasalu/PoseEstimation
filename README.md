@@ -45,7 +45,7 @@ PoseEstimation/
 1. Clone the repository:
    ```bash
    git clone https://github.com/virensasalu/PoseEstimation.git
-   cd FashionFlux-PoseEstimation
+   cd PoseEstimation
 
 2. Create a virtual environment and activate it:
    ```bash
