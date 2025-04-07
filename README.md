@@ -64,7 +64,7 @@ PoseEstimation/
 
 ## Sample Skeleton Pose Output Images for the corresponding input images 
 
-![New](https://github.com/user-attachments/assets/b3f8ba4c-be4c-48f9-a8c5-8c92d7f3efd4)
+![alt text](image.png)
 
 
 Feel free to explore, use, and contribute to this project.
