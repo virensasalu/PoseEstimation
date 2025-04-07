@@ -26,3 +26,20 @@ The **Pose Estimation** module is designed to detect and track keypoints of the 
    ```bash
    git clone https://github.com/iam-ajeetsingh/FashionFlux-PoseEstimation.git
    cd FashionFlux-PoseEstimation
+
+2. Create a virtual environment and activate it:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+
+## Usage
+
+1. Upload an image of a person.
+2. The system detects body keypoints using the MediaPipe library.
+3. Visualize the Pose of the given image. 
+
+   
