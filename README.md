@@ -40,6 +40,15 @@ The **Pose Estimation** module is designed to detect and track keypoints of the 
 
 1. Upload an image of a person.
 2. The system detects body keypoints using the MediaPipe library.
-3. Visualize the Pose of the given image. 
+3. Visualize the Pose of the given image.
+
+## Sample Skeleton Pose Output Images for the corresponding input images 
+
+![New](https://github.com/user-attachments/assets/b3f8ba4c-be4c-48f9-a8c5-8c92d7f3efd4)
+
+
+Feel free to explore, use, and contribute to this project.
+
+
 
    
