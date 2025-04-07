@@ -67,7 +67,7 @@ PoseEstimation/
 ![alt text](image.png)
 
 
-Feel free to explore, use, and contribute to this project.
+Credits: Thanks to @iam-ajeetsingh **Ajeet Singh**
 
 
 
