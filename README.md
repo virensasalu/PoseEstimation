@@ -50,7 +50,7 @@ PoseEstimation/
 2. Create a virtual environment and activate it:
    ```bash
    python3 -m venv venv
-   source venv/bin/activate
+   source poseenv/bin/activate
 
 3. Install the required dependencies:
    ```bash
