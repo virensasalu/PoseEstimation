@@ -1,3 +1,16 @@
+"""
+Version1: 
+Generated Skeleton image in Grey Scale with White lines for Skeleton.
+Output is stored in output_images directory. 
+
+Version2: 
+Added code to store the skeleton image in numpy array and 
+create skeleton image with Colors for landmarks and connections.
+Output is stored in Color_output_images directory. 
+
+"""
+
+
 
 import torch
 
@@ -6,6 +19,7 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import os
+
 
 
 # Function to detect the pose using Mediapipe
@@ -23,14 +37,14 @@ def detect_pose(image):
     # Create a blank image for the skeleton
     skeleton_image = np.zeros_like(image)
 
-    # Draw the pose landmarks on the blank image
+    # Draw the pose landmarks on the blank image with colorful, thick lines
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(
             skeleton_image,
             results.pose_landmarks,
             mp_pose.POSE_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=2, circle_radius=2),
-            mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=2, circle_radius=2),
+            mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=8, circle_radius=2),  # Green for landmarks
+            mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=8, circle_radius=2),  # Red for connections
         )
 
     return skeleton_image
@@ -48,13 +62,15 @@ def preprocess_image(image_path):
     # Detect the pose
     pose_image = detect_pose(image)
 
-    # Convert to grayscale and resize
-    pose_image = cv2.cvtColor(pose_image, cv2.COLOR_BGR2GRAY)
+    # Convert to RGB and resize
+    pose_image = cv2.cvtColor(pose_image, cv2.COLOR_BGR2RGB)
+    # chnaged from "COLOR_BGR2GRAY" to "COLOR_BGR2RGB" above to keep the RGB Colors
     pose_image = cv2.resize(pose_image, (512, 512))
 
     # Convert to PIL image
     pose_pil = Image.fromarray(pose_image)
     return pose_pil
+
 
 
 
@@ -69,13 +85,16 @@ def generate_pose_image(input_image_path, output_image_path):
     pose_image.save(output_image_path)
     print(f" Output Pose_Image is saved as {output_image_path}")
 
+    # Save the skeleton image in Numpy Array
+    pose_array = np.array(pose_image)  # Convert to numpy array for further processing
 
-"""
-if __name__ == "__main__":
-    input_image_path = "input_images/4.jpg"  # Replace with the path to your input image
-    output_image_path = "output_images/skeleton_image_4.png"  # Replace with the desired output path
-    generate_pose_image(input_image_path, output_image_path) 
-"""
+    # Print basic information
+    print(f"Array shape: {pose_array.shape}")
+    print(f"Data type: {pose_array.dtype}")
+
+
+
+
 
 if __name__ == "__main__":
 # Ensure the input and output directories exist
@@ -86,7 +105,7 @@ if __name__ == "__main__":
     for i in range(1, 6):
         # Construct the input and output paths dynamically
         input_image_path = f"input_images/{i}.jpg"  # Input image path
-        output_image_path = f"output_images/skeleton_image_{i}.png"  # Output image path
+        output_image_path = f"color_ouput_images/skeleton_image_{i}.png"  # Output image path
 
         # Call the function for each image
         try:
